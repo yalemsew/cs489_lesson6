@@ -1,11 +1,13 @@
 package com.bright.libms.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "books")
+@Data
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +15,7 @@ public class Book {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private String isbn;
     @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(
