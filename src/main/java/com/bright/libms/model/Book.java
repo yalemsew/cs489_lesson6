@@ -18,7 +18,7 @@ public class Book {
     @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "books_authors", //joining table name
-            joinColumns = @JoinColumn(name="book_id"), //which entity owns the asscociation
+            joinColumns = @JoinColumn(name="book_id"), //which entity owns the association
             inverseJoinColumns = @JoinColumn(name="author_d")   //other entity, Author's PK or any other field(unique)
     )
     private List<Author> authors;
