@@ -8,6 +8,7 @@ import com.bright.libms.model.Address;
 import com.bright.libms.model.Publisher;
 import com.bright.libms.repository.PublisherRepository;
 import com.bright.libms.service.PublisherService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,9 +58,24 @@ public class PublisherServiceImpl implements PublisherService {
             //edit the foundPublisher object
             Publisher mappedPublisher = publisherMapper.publisherRequestDtoToPublisher(publisherRequestDto);
             mappedPublisher.setId(foundPublisher.getId());
+            //Something is missing...sensitive
+            if (mappedPublisher.getAddress() != null) {
+                mappedPublisher.getAddress().setId(foundPublisher.getAddress().getId());
+            }
             Publisher updatedPublisher = publisherRepository.save(mappedPublisher);
             return Optional.ofNullable(publisherMapper.publisherToPublisherResponseDto(updatedPublisher));
         }
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public void deletePublisherByName(String name) {
+//        publisherRepository.findByNameIgnoreCase(name)
+//                .ifPresent(publisher -> publisherRepository.delete(publisher));
+        Optional<PublisherResponseDto> optionalPublisherResponseDto = findPublisherByName(name);
+        if (optionalPublisherResponseDto.isPresent()) {
+            publisherRepository.deleteByName(name);
+        }
     }
 }

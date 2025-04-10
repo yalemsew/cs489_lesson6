@@ -16,4 +16,6 @@ public interface PublisherService {
     List<PublisherResponseDto> findAllPublishers();
     //Update
     Optional<PublisherResponseDto> updatePublisher(String name, PublisherRequestDto publisherRequestDto);
+    //Delete
+    void deletePublisherByName(String name);
 }
