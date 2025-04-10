@@ -9,7 +9,7 @@ import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)//"spring"
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {AddressMapper.class})//"spring"
 public interface PublisherMapper {
     //mapper method to map from PublisherRequestDto to Publisher
     @Mapping(source = "addressRequestDto", target = "address")
