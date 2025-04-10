@@ -34,6 +34,7 @@ public class LibmsApplication {
                     )
             );
             System.out.println(publisherService.createPublisher(publisherRequestDto));
+            System.out.println("Find by name: " + publisherService.findPublisherByName("Apress"));
             System.out.println(publisherService.findAllPublishers());
         };
     }

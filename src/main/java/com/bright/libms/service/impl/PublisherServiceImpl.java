@@ -34,7 +34,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public Optional<PublisherResponseDto> findPublisherByName(String name) {
-        Optional<Publisher> optionalPublisher = publisherRepository.findByName(name);
+        Optional<Publisher> optionalPublisher = publisherRepository.findByNameIgnoreCase(name);
         if (optionalPublisher.isPresent()) {
             return Optional.ofNullable(publisherMapper.publisherToPublisherResponseDto(optionalPublisher.get()));
         }
@@ -50,6 +50,16 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public Optional<PublisherResponseDto> updatePublisher(String name, PublisherRequestDto publisherRequestDto) {
+        //Check publisher is existing or not
+        Optional<Publisher> optionalPublisher = publisherRepository.findByNameIgnoreCase(name);
+        if (optionalPublisher.isPresent()) {
+            Publisher foundPublisher = optionalPublisher.get();
+            //edit the foundPublisher object
+            Publisher mappedPublisher = publisherMapper.publisherRequestDtoToPublisher(publisherRequestDto);
+            mappedPublisher.setId(foundPublisher.getId());
+            Publisher updatedPublisher = publisherRepository.save(mappedPublisher);
+            return Optional.ofNullable(publisherMapper.publisherToPublisherResponseDto(updatedPublisher));
+        }
         return Optional.empty();
     }
 }

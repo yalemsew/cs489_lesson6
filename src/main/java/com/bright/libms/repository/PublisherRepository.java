@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface PublisherRepository extends JpaRepository<Publisher, Long> {
     //JPA query method => find a publisher by name
-    Optional<Publisher> findByName(String name);
+    Optional<Publisher> findByNameIgnoreCase(String name);//Actual => apress
     void deleteByName(String name);
 }
